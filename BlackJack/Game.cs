@@ -16,24 +16,24 @@ namespace BlackJack
         private static Deck deck = new Deck();
         private static bool finished = false;
 
-        public static void run(GameWindow gameWindow)
+        public static void Run(GameWindow gameWindow)
         {
             player1 = new Player(STARTING_MONEY, gameWindow);
             dealer = new Player(gameWindow);
             finished = true;    // required to start the first round
-            startRound();
+            StartRound();
         }
 
-        public static void startRound()
+        public static void StartRound()
         {
             if (finished)
             {
-                newRound();
-                if (player1.bet(BET_AMOUNT))
+                NewRound();
+                if (player1.Bet(BET_AMOUNT))
                 {
-                    dealer.putInHand(drawCard());
-                    player1.putInHand(drawCard());
-                    player1.putInHand(drawCard());
+                    dealer.PutInHand(drawCard());
+                    player1.PutInHand(drawCard());
+                    player1.PutInHand(drawCard());
                 }
                 else
                 {
@@ -42,93 +42,93 @@ namespace BlackJack
             }
         }
 
-        private static void newRound()
+        private static void NewRound()
         {
             finished = false;
-            player1.newRound();
-            dealer.newRound();
+            player1.NewRound();
+            dealer.NewRound();
             deck = new Deck();
             
         }
 
         private static Card drawCard()
         {
-            return deck.draw();
+            return deck.Draw();
         }
 
         public static void playerHit()
         {
             if (!finished)
             {
-                hit(player1);
-                if (player1.above21())
+                Hit(player1);
+                if (player1.Above21())
                 {
-                    win(dealer);
+                    Win(dealer);
                 }
             } else
             {
-                startRound();
+                StartRound();
             }
             
         }
-        private static void hit(Player player)
+        private static void Hit(Player player)
         {
 
-            player.hit();
-            player.putInHand(drawCard());
+            player.Hit();
+            player.PutInHand(drawCard());
         }
        
-        public static void playerStand()
+        public static void PlayerStand()
         {
             if (!finished)
             {
-                stand(player1);
-                playDealer();
+                Stand(player1);
+                PlayDealer();
             }
             else
             {
-                startRound();
+                StartRound();
             }
             
         }
-        private static void stand(Player player)
+        private static void Stand(Player player)
         {
-            player.stand();
+            player.Stand();
         }
-        private static void playDealer()
+        private static void PlayDealer()
         {
-            while (dealer.getMinimumValue() < 17)
+            while (dealer.GetMinimumValue() < 17)
             {
-                hit(dealer);
+                Hit(dealer);
                 System.Threading.Thread.Sleep(2000);
             }
-            if (dealer.above21()) win(player1);
+            if (dealer.Above21()) Win(player1);
             else
             {
-                stand(dealer);
+                Stand(dealer);
                 System.Threading.Thread.Sleep(2000);
-                checkWin();
+                CheckWin();
             }
 
         }
-        private static void checkWin()
+        private static void CheckWin()
         {
-            if (player1.calcBestValue() > dealer.calcBestValue()) win(player1);
-            else if (player1.calcBestValue() < dealer.calcBestValue()) win(dealer);
+            if (player1.CalcBestValue() > dealer.CalcBestValue()) Win(player1);
+            else if (player1.CalcBestValue() < dealer.CalcBestValue()) Win(dealer);
             else
             {
-                tie();
+                Tie();
             }
         }
-        private static void tie()
+        private static void Tie()
         {
-            player1.tie(BET_AMOUNT);
+            player1.Tie(BET_AMOUNT);
             finished = true;
             
         }
-        private static void win(Player player)
+        private static void Win(Player player)
         {
-            player.win(BET_AMOUNT*2);
+            player.Win(BET_AMOUNT*2);
             finished = true;
             
         }

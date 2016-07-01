@@ -15,7 +15,7 @@ namespace BlackJack
         public GameWindow()
         {
             InitializeComponent();
-            Game.run(this);
+            Game.Run(this);
             
         }
 
@@ -33,14 +33,14 @@ namespace BlackJack
         private void button1_Click_1(object sender, EventArgs e)
         {
             // Player stand
-            Game.playerStand();
+            Game.PlayerStand();
         }
 
-        public void previousAction(String text) {
+        public void previousAction(string text) {
             textBoxPreviousActions.AppendText(text + Environment.NewLine);
         }
 
-        public void addPlayerCard(String card)
+        public void addPlayerCard(string card)
         {
             if (labelPlayerCards.Text.Equals("-"))
             {
@@ -59,7 +59,7 @@ namespace BlackJack
             labelPlayerValue.Refresh();
         }
 
-        public void addDealerCard(String card)
+        public void addDealerCard(string card)
         {
             if (labelDealerCards.Text.Equals("-"))
             {
@@ -94,7 +94,7 @@ namespace BlackJack
 
         private void buttonNextRound_Click(object sender, EventArgs e)
         {
-            Game.startRound();
+            Game.StartRound();
         }
     }
 }

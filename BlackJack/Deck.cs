@@ -16,24 +16,24 @@ namespace BlackJack
         public Deck()
         {
             deckArray = new Card[DECK_SIZE];
-            generateDeck();
-            shuffle();
+            GenerateDeck();
+            Shuffle();
             deck = new LinkedList<Card>(deckArray);
             
         }
-        private void generateDeck()
+        private void GenerateDeck()
         {
             // add non-face cards
             for (int i = 2; i < 11; i++) {
-                insert4Cards(i);
+                Insert4Cards(i);
             }
             // add face cards
-            insert4Cards(10, Card.KNIGHT);
-            insert4Cards(10, Card.QUEEN);
-            insert4Cards(10, Card.KING);
-            insert4Cards(11, Card.ACE);
+            Insert4Cards(10, Card.KNIGHT);
+            Insert4Cards(10, Card.QUEEN);
+            Insert4Cards(10, Card.KING);
+            Insert4Cards(11, Card.ACE);
         }
-        private void insert4Cards(int value)
+        private void Insert4Cards(int value)
         {
             for(int i = 0; i < 4; i++)
             {
@@ -41,7 +41,7 @@ namespace BlackJack
                 currentIndex++;
             }
         }
-        private void insert4Cards(int value, String name)
+        private void Insert4Cards(int value, string name)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -49,7 +49,7 @@ namespace BlackJack
                 currentIndex++;
             }
         }
-        private void shuffle()
+        private void Shuffle()
         {
             Random rand = new Random();
             for(int i = 0; i < DECK_SIZE; i++)
@@ -61,7 +61,7 @@ namespace BlackJack
             }
 
         }
-        private void printDeck()
+        private void PrintDeck()
         {
             foreach(Card card in deckArray)
             {
@@ -69,7 +69,7 @@ namespace BlackJack
             }
             Console.WriteLine(deckArray.Length);
         }
-        public Card draw()
+        public Card Draw()
         {
             Card card = deck.Last();
             deck.RemoveLast();

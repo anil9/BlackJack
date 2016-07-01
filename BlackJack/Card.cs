@@ -8,28 +8,28 @@ namespace BlackJack
 {
     class Card
     {
-        public static readonly String KNIGHT = "J";
-        public static readonly String QUEEN = "Q";
-        public static readonly String KING = "K";
-        public static readonly String ACE = "A";
+        public static readonly string KNIGHT = "J";
+        public static readonly string QUEEN = "Q";
+        public static readonly string KING = "K";
+        public static readonly string ACE = "A";
         private readonly int value;
-        private readonly String name;
+        private readonly string name;
         public Card(int value)
         {
             this.value = value;
             name = value + "";
         }
-        public Card(int value, String name)
+        public Card(int value, string name)
         {
             this.value = value;
             this.name = name;
         }
         
-        public override String ToString()
+        public override string ToString()
         {
             return name;
         }
-        public int getValue()
+        public int GetValue()
         {
             return value;
         }

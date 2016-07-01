@@ -9,7 +9,7 @@ namespace BlackJack
     class Player
     {
         private GameWindow gameWindow;
-        private String name;
+        private string name;
         private int money;
         private LinkedList<Card> hand = new LinkedList<Card>();
         private readonly bool dealer;
@@ -34,16 +34,16 @@ namespace BlackJack
             dealer = false;
         }
 
-        public bool isDealer()
+        public bool IsDealer()
         {
             return dealer;
         }
-        public bool bet(int amount)
+        public bool Bet(int amount)
         {
 
             if (money - amount >= 0)
             {
-                subtractMoney(amount);
+                SubtractMoney(amount);
                 gameWindow.previousAction(name + " BET " + amount);
                 return true;
             }
@@ -54,16 +54,16 @@ namespace BlackJack
         }
 
 
-        public void putInHand(Card card)
+        public void PutInHand(Card card)
         {
             hand.AddLast(card);
             if (card.ToString().Equals(Card.ACE)) hasAce = true;
-            update(card);
+            Update(card);
         }
-        private void update(Card card)
+        private void Update(Card card)
         {
-            maxValue += card.getValue();
-            bestValue = calcBestValue();
+            maxValue += card.GetValue();
+            bestValue = CalcBestValue();
             if (dealer)
             {
                 gameWindow.addDealerCard(card.ToString());
@@ -77,7 +77,7 @@ namespace BlackJack
 
         }
 
-        public int getMinimumValue()
+        public int GetMinimumValue()
         {
             if (hasAce)
             {
@@ -85,7 +85,7 @@ namespace BlackJack
                 foreach (Card card in hand)
                 {
                     if (card.ToString().Equals(Card.ACE)) min += 1;
-                    else min += card.getValue();
+                    else min += card.GetValue();
                 }
                 return min;
             }
@@ -97,7 +97,7 @@ namespace BlackJack
             return bestValue;
         }
 
-        public void newRound()
+        public void NewRound()
         {
             bestValue = 0;
             maxValue = 0;
@@ -106,7 +106,7 @@ namespace BlackJack
             if (dealer) gameWindow.newRound();
         }
 
-        public int calcBestValue()
+        public int CalcBestValue()
         {
             if (hasAce)
             {
@@ -139,31 +139,31 @@ namespace BlackJack
             else return maxValue;
         }
 
-        public void hit() { gameWindow.previousAction(name + " HIT"); }
+        public void Hit() { gameWindow.previousAction(name + " HIT"); }
 
-        public void tie(int moneyBack)
+        public void Tie(int moneyBack)
         {
-            addMoney(moneyBack);
+            AddMoney(moneyBack);
             gameWindow.previousAction("TIE");
         }
-        private void addMoney(int amount)
+        private void AddMoney(int amount)
         {
             money += amount;
             gameWindow.updatePlayerMoney(money);
         }
-        private void subtractMoney(int amount)
+        private void SubtractMoney(int amount)
         {
             money -= amount;
             gameWindow.updatePlayerMoney(money);
         }
-        public void stand() { gameWindow.previousAction(name + " STAND"); }
-        public bool above21()
+        public void Stand() { gameWindow.previousAction(name + " STAND"); }
+        public bool Above21()
         {
             return bestValue > 21;
         }
-        public void win(int amount)
+        public void Win(int amount)
         {
-            addMoney(amount);
+            AddMoney(amount);
             gameWindow.previousAction(name + " wins");
 
             System.Threading.Thread.Sleep(2000);
