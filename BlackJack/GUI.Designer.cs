@@ -51,14 +51,14 @@
             resources.ApplyResources(this.buttonActionHit, "buttonActionHit");
             this.buttonActionHit.Name = "buttonActionHit";
             this.buttonActionHit.UseVisualStyleBackColor = true;
-            this.buttonActionHit.Click += new System.EventHandler(this.button1_Click);
+            this.buttonActionHit.Click += new System.EventHandler(this.PlayerHitButton_Click);
             // 
             // buttonActionStand
             // 
             resources.ApplyResources(this.buttonActionStand, "buttonActionStand");
             this.buttonActionStand.Name = "buttonActionStand";
             this.buttonActionStand.UseVisualStyleBackColor = true;
-            this.buttonActionStand.Click += new System.EventHandler(this.button1_Click_1);
+            this.buttonActionStand.Click += new System.EventHandler(this.PlayerStandButton_Click);
             // 
             // label1
             // 
@@ -126,7 +126,7 @@
             resources.ApplyResources(this.buttonNextRound, "buttonNextRound");
             this.buttonNextRound.Name = "buttonNextRound";
             this.buttonNextRound.UseVisualStyleBackColor = true;
-            this.buttonNextRound.Click += new System.EventHandler(this.buttonNextRound_Click);
+            this.buttonNextRound.Click += new System.EventHandler(this.NextRoundButton_Click);
             // 
             // GameWindow
             // 

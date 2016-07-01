@@ -1,173 +1,174 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace BlackJack
 {
-    class Player
+    internal class Player
     {
-        private GameWindow gameWindow;
-        private string name;
-        private int money;
-        private LinkedList<Card> hand = new LinkedList<Card>();
-        private readonly bool dealer;
-        private int maxValue = 0;
-        private int bestValue = 0;
-        private bool hasAce = false;
+        public readonly bool Dealer;
+        private int _bestValue;
+        private bool _hasAce;
+        private int _maxValue;
 
 
-        public Player(GameWindow gameWindow)
+        public Player() : this(99999, "dealer", true)
         {
-            // Used for dealer
-            this.gameWindow = gameWindow;
-            name = "Dealer";
-            dealer = true;
         }
 
-        public Player(int startingMoney, GameWindow gameWindow)
+        public Player(int startingMoney) : this(startingMoney, "player1", false)
         {
-            money = startingMoney;
-            this.gameWindow = gameWindow;
-            name = "Player1";
-            dealer = false;
         }
 
-        public bool IsDealer()
+
+        public Player(int startingMoney, string name, bool dealer)
         {
-            return dealer;
+            Money = startingMoney;
+            Name = name;
+            Dealer = dealer;
         }
+
+        public string Name { get; }
+        public int Money { get; private set; }
+        public LinkedList<Card> Hand { get; private set; }
+
+
         public bool Bet(int amount)
         {
-
-            if (money - amount >= 0)
+            if (Money - amount >= 0)
             {
                 SubtractMoney(amount);
-                gameWindow.previousAction(name + " BET " + amount);
+                Program.Window.AddToHistoryLog(Name + " BET " + amount);
+
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
 
         public void PutInHand(Card card)
         {
-            hand.AddLast(card);
-            if (card.ToString().Equals(Card.ACE)) hasAce = true;
+            Hand.AddLast(card);
+            if (card.ToString().Equals(Card.Ace)) _hasAce = true;
             Update(card);
         }
+
         private void Update(Card card)
         {
-            maxValue += card.GetValue();
-            bestValue = CalcBestValue();
-            if (dealer)
+            _maxValue += card.Value;
+            _bestValue = CalcBestValue();
+            if (Dealer)
             {
-                gameWindow.addDealerCard(card.ToString());
-                gameWindow.setDealerValue(bestValue);
+                Program.Window.AddDealerCard(card.ToString());
+                Program.Window.SetDealerValue(_bestValue);
             }
             else
             {
-                gameWindow.addPlayerCard(card.ToString());
-                gameWindow.setPlayerValue(bestValue);
+                Program.Window.AddPlayerCard(card.ToString());
+                Program.Window.SetPlayerValue(_bestValue);
             }
+        }
 
+
+        /// <summary>
+        ///     Try to achieve a hand below blackjack value by replacing Aces 11's with 1's until below value 22 OR until no more
+        ///     aces.
+        /// </summary>
+        /// <param name="maxValue">The value when all the aces has been counted as 11's</param>
+        /// <param name="numAces">Number of aces on hand</param>
+        /// <returns></returns>
+        private int CalcWithLowerValueAces(int maxValue, int numAces)
+        {
+            var tmpValue = maxValue;
+            for (var i = 0; i < numAces; i++)
+            {
+                tmpValue -= 10;
+                if (tmpValue <= Game.BlackJackValue)
+                {
+                    return tmpValue;
+                }
+            }
+            // more than 21
+            return tmpValue;
+        }
+
+
+        private void AddMoney(int amount)
+        {
+            Money += amount;
+            if (!Dealer)
+            {
+                Program.Window.UpdatePlayerMoney(Money);
+            }
+        }
+
+        private void SubtractMoney(int amount)
+        {
+            Money -= amount;
+            Program.Window.UpdatePlayerMoney(Money);
         }
 
         public int GetMinimumValue()
         {
-            if (hasAce)
+            if (!_hasAce) return _bestValue;
+            var min = 0;
+            foreach (var card in Hand)
             {
-                int min = 0;
-                foreach (Card card in hand)
-                {
-                    if (card.ToString().Equals(Card.ACE)) min += 1;
-                    else min += card.GetValue();
-                }
-                return min;
+                if (card.ToString().Equals(Card.Ace)) min += 1;
+                else min += card.Value;
             }
-            else return bestValue;
-        }
-
-        public int getValue()
-        {
-            return bestValue;
+            return min;
         }
 
         public void NewRound()
         {
-            bestValue = 0;
-            maxValue = 0;
-            hand = new LinkedList<Card>();
-            hasAce = false;
-            if (dealer) gameWindow.newRound();
+            _bestValue = 0;
+            _maxValue = 0;
+            Hand = new LinkedList<Card>();
+            _hasAce = false;
+            if (Dealer) Program.Window.NewRound();
         }
 
         public int CalcBestValue()
         {
-            if (hasAce)
+            if (!_hasAce) return _maxValue;
+            if (_maxValue <= Game.BlackJackValue)
             {
-                if (maxValue <= Game.BLACKJACK)
-                {
-                    return maxValue;
-                }
-                else
-                {
-                    int numAces = 0;
-                    foreach (Card card in hand)
-                    {
-                        if (card.ToString().Equals(Card.ACE)) numAces += 1;
-                    }
-                    int tmpValue = maxValue;
-                    // replace 11's with 1's until below value 22 OR until no more aces.
-                    for (int i = 0; i < numAces; i++)
-                    {
-                        tmpValue -= 10;
-                        if (tmpValue <= Game.BLACKJACK)
-                        {
-                            return tmpValue;
-                        }
-                    }
-                    // more than 21
-                    return tmpValue;
-
-                }
+                return _maxValue;
             }
-            else return maxValue;
+            var numAces = Hand.Count(card => card.ToString().Equals(Card.Ace));
+
+            return CalcWithLowerValueAces(_maxValue, numAces);
         }
 
-        public void Hit() { gameWindow.previousAction(name + " HIT"); }
+        public void Hit()
+        {
+            Program.Window.AddToHistoryLog(Name + " HIT");
+        }
 
         public void Tie(int moneyBack)
         {
             AddMoney(moneyBack);
-            gameWindow.previousAction("TIE");
+            Program.Window.AddToHistoryLog("TIE");
         }
-        private void AddMoney(int amount)
+
+
+        public void Stand()
         {
-            money += amount;
-            gameWindow.updatePlayerMoney(money);
+            Program.Window.AddToHistoryLog(Name + " STAND");
         }
-        private void SubtractMoney(int amount)
+
+        public bool AboveBlackJackValue()
         {
-            money -= amount;
-            gameWindow.updatePlayerMoney(money);
+            return _bestValue > Game.BlackJackValue;
         }
-        public void Stand() { gameWindow.previousAction(name + " STAND"); }
-        public bool Above21()
-        {
-            return bestValue > 21;
-        }
+
         public void Win(int amount)
         {
             AddMoney(amount);
-            gameWindow.previousAction(name + " wins");
+            Program.Window.AddToHistoryLog(Name + " wins. (" + amount + ")");
 
-            System.Threading.Thread.Sleep(2000);
+            Thread.Sleep(2000);
         }
-
     }
 }

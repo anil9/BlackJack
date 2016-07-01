@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BlackJack
@@ -15,32 +8,33 @@ namespace BlackJack
         public GameWindow()
         {
             InitializeComponent();
-            Game.Run(this);
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void PlayerHitButton_Click(object sender, EventArgs e)
         {
-            // Player hit
-            Game.playerHit();
+            Game.PlayerHit();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void PlayerStandButton_Click(object sender, EventArgs e)
         {
-            // Player stand
             Game.PlayerStand();
         }
 
-        public void previousAction(string text) {
+        private void NextRoundButton_Click(object sender, EventArgs e)
+        {
+            Game.StartRound();
+        }
+
+        public void AddToHistoryLog(string text)
+        {
             textBoxPreviousActions.AppendText(text + Environment.NewLine);
         }
 
-        public void addPlayerCard(string card)
+        public void AddPlayerCard(string card)
         {
             if (labelPlayerCards.Text.Equals("-"))
             {
@@ -48,18 +42,18 @@ namespace BlackJack
             }
             else
             {
-                labelPlayerCards.Text +=", "+ card;
+                labelPlayerCards.Text += ", " + card;
             }
             labelPlayerCards.Refresh();
         }
 
-        public void setPlayerValue(int value)
+        public void SetPlayerValue(int value)
         {
             labelPlayerValue.Text = value + "";
             labelPlayerValue.Refresh();
         }
 
-        public void addDealerCard(string card)
+        public void AddDealerCard(string card)
         {
             if (labelDealerCards.Text.Equals("-"))
             {
@@ -72,29 +66,24 @@ namespace BlackJack
             labelDealerCards.Refresh();
         }
 
-        public void setDealerValue(int value)
+        public void SetDealerValue(int value)
         {
             labelDealerValue.Text = value + "";
             labelDealerValue.Refresh();
         }
 
-        public void updatePlayerMoney(int value)
+        public void UpdatePlayerMoney(int value)
         {
-            labelPlayerMoney.Text =  value + "";
+            labelPlayerMoney.Text = value + "";
         }
 
-        public void newRound()
+        public void NewRound()
         {
             labelPlayerCards.Text = "-";
             labelDealerCards.Text = "-";
             labelPlayerValue.Text = "0";
             labelDealerValue.Text = "0";
-            previousAction("== New Round ==");
-        }
-
-        private void buttonNextRound_Click(object sender, EventArgs e)
-        {
-            Game.StartRound();
+            AddToHistoryLog("== New Round ==");
         }
     }
 }

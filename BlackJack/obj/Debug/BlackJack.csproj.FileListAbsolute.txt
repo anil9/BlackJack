@@ -9,3 +9,4 @@ D:\workspace\BlackJack\BlackJack\obj\Debug\BlackJack.csproj.GenerateResource.Cac
 D:\workspace\BlackJack\BlackJack\obj\Debug\aa\BlackJack.resources.dll
 D:\workspace\BlackJack\BlackJack\obj\Debug\BlackJack.exe
 D:\workspace\BlackJack\BlackJack\obj\Debug\BlackJack.pdb
+D:\workspace\BlackJack\BlackJack\obj\Debug\BlackJack.csprojResolveAssemblyReference.cache
