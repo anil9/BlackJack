@@ -1,0 +1,11 @@
+D:\workspace\BlackJack\BlackJack\bin\Release\BlackJack.exe.config
+D:\workspace\BlackJack\BlackJack\bin\Release\BlackJack.exe
+D:\workspace\BlackJack\BlackJack\bin\Release\BlackJack.pdb
+D:\workspace\BlackJack\BlackJack\bin\Release\aa\BlackJack.resources.dll
+D:\workspace\BlackJack\BlackJack\obj\Release\BlackJack.GameWindow.resources
+D:\workspace\BlackJack\BlackJack\obj\Release\BlackJack.Properties.Resources.resources
+D:\workspace\BlackJack\BlackJack\obj\Release\BlackJack.GameWindow.aa.resources
+D:\workspace\BlackJack\BlackJack\obj\Release\BlackJack.csproj.GenerateResource.Cache
+D:\workspace\BlackJack\BlackJack\obj\Release\aa\BlackJack.resources.dll
+D:\workspace\BlackJack\BlackJack\obj\Release\BlackJack.exe
+D:\workspace\BlackJack\BlackJack\obj\Release\BlackJack.pdb
