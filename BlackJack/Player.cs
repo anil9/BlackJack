@@ -12,11 +12,11 @@ namespace BlackJack
         private int _maxValue;
 
 
-        public Player() : this(99999, "dealer", true)
+        public Player() : this(99999, "player", false)
         {
         }
 
-        public Player(int startingMoney) : this(startingMoney, "player1", false)
+        public Player(int startingMoney) : this(startingMoney, "player", false)
         {
         }
 
