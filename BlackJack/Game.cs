@@ -98,7 +98,7 @@ namespace BlackJack
 
         private static void PlayDealer()
         {
-            while (Dealer.GetMinimumValue() < 17)
+            while (Dealer.CalcBestValue() < 17)
             {
                 Hit(Dealer);
                 ShortDelay();
@@ -114,7 +114,7 @@ namespace BlackJack
 
         private static void ShortDelay()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
         }
 
         private static void CheckWin()
