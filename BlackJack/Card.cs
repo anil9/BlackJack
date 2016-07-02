@@ -9,10 +9,8 @@
         public readonly string Name;
         public readonly int Value;
 
-        public Card(int value)
+        public Card(int value) : this(value, value+"")
         {
-            Value = value;
-            Name = value + "";
         }
 
         public Card(int value, string name)
