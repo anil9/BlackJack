@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace BlackJack
 {
-    internal class Player
+    public class Player
     {
         public readonly bool Dealer;
         private int _bestValue;

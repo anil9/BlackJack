@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BlackJack
 {
-    internal class Deck
+    public class Deck
     {
         private const int DeckSize = 52;
         private readonly LinkedList<Card> _deck;

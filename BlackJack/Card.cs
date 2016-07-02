@@ -1,6 +1,6 @@
 ﻿namespace BlackJack
 {
-    internal class Card
+    public class Card
     {
         public static readonly string Knight = "J";
         public static readonly string Queen = "Q";
