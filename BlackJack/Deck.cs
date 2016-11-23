@@ -28,10 +28,10 @@ namespace BlackJack
                 Insert4Cards(i);
             }
             // add face cards
-            Insert4Cards(10, Card.Knight);
-            Insert4Cards(10, Card.Queen);
-            Insert4Cards(10, Card.King);
-            Insert4Cards(11, Card.Ace);
+            Insert4Cards(10, CardName.KNIGHT);
+            Insert4Cards(10, CardName.QUEEN);
+            Insert4Cards(10, CardName.KING);
+            Insert4Cards(11, CardName.ACE);
         }
 
         private void Insert4Cards(int value)

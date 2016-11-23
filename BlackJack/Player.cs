@@ -49,7 +49,7 @@ namespace BlackJack
         public void PutInHand(Card card)
         {
             Hand.AddLast(card);
-            if (card.ToString().Equals(Card.Ace)) _hasAce = true;
+            if (card.ToString().Equals(CardName.ACE)) _hasAce = true;
             Update(card);
         }
 
@@ -114,7 +114,7 @@ namespace BlackJack
             var min = 0;
             foreach (var card in Hand)
             {
-                if (card.ToString().Equals(Card.Ace)) min += 1;
+                if (card.ToString().Equals(CardName.ACE)) min += 1;
                 else min += card.Value;
             }
             return min;
@@ -136,7 +136,7 @@ namespace BlackJack
             {
                 return _maxValue;
             }
-            var numAces = Hand.Count(card => card.ToString().Equals(Card.Ace));
+            var numAces = Hand.Count(card => card.ToString().Equals(CardName.ACE));
 
             return CalcWithLowerValueAces(_maxValue, numAces);
         }

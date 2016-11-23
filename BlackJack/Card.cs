@@ -1,13 +1,12 @@
-﻿namespace BlackJack
+﻿using BlackJack.Enums;
+
+namespace BlackJack
 {
     public class Card
     {
-        public static readonly string Knight = "J";
-        public static readonly string Queen = "Q";
-        public static readonly string King = "K";
-        public static readonly string Ace = "A";
         public readonly string Name;
         public readonly int Value;
+        
 
         public Card(int value) : this(value, value+"")
         {
@@ -21,7 +20,7 @@
 
         public override string ToString()
         {
-            return Name;
+            return Name.ToString();
         }
     }
 }
